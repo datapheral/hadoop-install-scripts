@@ -18,8 +18,13 @@ jetty 8.1
 http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/8.1.1.v20120215/
 https://wiki.eclipse.org/Jetty_WTP_Plugin/Jetty_WTP_Install
 -------------------------
-
+maven base project setup
 http://viralpatel.net/blogs/generate-dynamic-web-project-maven-eclipse-wtp/
+http://stackoverflow.com/questions/3724415/maven-artifact-and-groupid-naming
+
+maven build, specify mvn eclipse:eclipse -Dwtpversion=1.5
+then maven clean maven install
+then create web.xml
 
 ------------------------
 java.lang.ClassNotFoundException: org.objectweb.asm.ClassVisitor

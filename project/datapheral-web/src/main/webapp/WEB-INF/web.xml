@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    id="WebApp_ID" version="2.5">
+    <display-name>BaseServlet</display-name>
+    <welcome-file-list>
+        <welcome-file>datapheral-web</welcome-file>
+    </welcome-file-list>
+ 
+    <servlet>
+        <servlet-name>BaseServlet</servlet-name>
+        <servlet-class>
+            com.datapheral.web.BaseServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BaseServlet</servlet-name>
+        <url-pattern>/datapheral-web</url-pattern>
+    </servlet-mapping>
+</web-app>
