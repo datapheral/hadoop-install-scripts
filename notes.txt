@@ -57,3 +57,6 @@ http://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/3.1.0
 mvc
 https://docs.google.com/presentation/d/1DiFRaqAHxSsFBIqyFfz70e431RYr4ZUuMMZTbVRnpJ8/edit?pli=1#slide=id.i215
 
+----
+
+notes -- pull to update. before pushing to upstream
