@@ -25,6 +25,19 @@ http://stackoverflow.com/questions/3724415/maven-artifact-and-groupid-naming
 maven build, specify mvn eclipse:eclipse -Dwtpversion=1.5
 then maven clean maven install
 then create web.xml
+install egit, install m2e-egit
+
+bundle org.eclipse.egit.core [1.0.0,3.0.0)' but it could not be found
+http://forum.spring.io/forum/spring-projects/springsource-tool-suite/121491-problem-to-install-maven-scm-handler-for-egit-in-sts-3-0-0
+http://stackoverflow.com/questions/11707971/cant-install-maven-scm-handler-for-egit-for-juno
+http://repository.tesla.io:8081/nexus/content/sites/m2e.extras/m2eclipse-egit/0.14.0/N/0.14.0.201305250025/
+
+Click Help
+Click Install New Software
+Uncheck the box labeled Group items by category (this step is important or you won't see the connector in the table)
+Paste in this URL http://repository.tesla.io:8081/nexus/content/sites/m2e.extras/m2eclipse-egit/0.14.0/N/0.14.0.201305250025/
+Finish the plugin install wizard and restart the workspace
+
 
 ------------------------
 java.lang.ClassNotFoundException: org.objectweb.asm.ClassVisitor
