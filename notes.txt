@@ -3,3 +3,7 @@ Missing eth0 in Ubuntu guest
 each time you give a new MAC address (in VBox guest settings) Debian and Ubuntu guests udev assigns a new eth number
 edit /etc/udev/rules.d/70-persistent-net.rules or delete the file: it will be recreated @ next boot
 ----------------------
+
+show ip on boot
+http://offbytwo.com/2008/05/09/show-ip-address-of-vm-as-console-pre-login-message.html
+
