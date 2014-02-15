@@ -49,4 +49,11 @@ You need to modify the run configuration for the Jetty server. Basically, in Ecl
 
 ------------------------
 
+http://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/3.1.0
+-Djetty.home="C:\Documents and Settings\Administrator\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0" -DSTART="C:\Documents and Settings\Administrator\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0/start.config" -Dinstall.jetty.home="D:\javaapps2014\jetty-distribution-8.1.1.v20120215" -DVERBOSE -Djetty.port=8080 -DSTOP.PORT=8082 -DSTOP.KEY=secret
+
+--------------
+
+mvc
+https://docs.google.com/presentation/d/1DiFRaqAHxSsFBIqyFfz70e431RYr4ZUuMMZTbVRnpJ8/edit?pli=1#slide=id.i215
 
