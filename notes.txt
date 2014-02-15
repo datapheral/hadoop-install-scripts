@@ -63,6 +63,7 @@ notes -- pull to update. before pushing to upstream
 
 --------------------------
 
+http://blog.mc-thias.org/?title=cruisecontrol-jetty-and-default-page&more=1&c=1&tb=1&pb=1
 fix for root index.html
 Error 404 - Not Found.
 
