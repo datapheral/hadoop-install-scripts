@@ -31,5 +31,14 @@
     <servlet-mapping>
         <servlet-name>ServletLifeCycle</servlet-name>
         <url-pattern>/servletlifecycle</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>  
+	<servlet>
+		<servlet-name>WebSocket</servlet-name>
+		<servlet-class>com.datapheral.websockets.TailorWebSocketServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WebSocket</servlet-name>
+		<url-pattern>/datapheralweb/*</url-pattern>
+	</servlet-mapping>    
+      
 </web-app>
