@@ -7,3 +7,10 @@ edit /etc/udev/rules.d/70-persistent-net.rules or delete the file: it will be re
 show ip on boot
 http://offbytwo.com/2008/05/09/show-ip-address-of-vm-as-console-pre-login-message.html
 
+------------------------
+
+virtualbox guest additions
+https://blogs.oracle.com/joshis/entry/virtualbox_guest_additions_iso_download
+
+---------------------------
+
