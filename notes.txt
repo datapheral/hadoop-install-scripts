@@ -14,3 +14,21 @@ https://blogs.oracle.com/joshis/entry/virtualbox_guest_additions_iso_download
 
 ---------------------------
 
+jetty 8.1
+http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/8.1.1.v20120215/
+https://wiki.eclipse.org/Jetty_WTP_Plugin/Jetty_WTP_Install
+-------------------------
+
+http://viralpatel.net/blogs/generate-dynamic-web-project-maven-eclipse-wtp/
+
+------------------------
+java.lang.ClassNotFoundException: org.objectweb.asm.ClassVisitor
+asm issue
+http://laccetti.com/2013/01/eclipse-jetty-asm/
+I made sure that ASM was  in the project classpath, in the deployed webapp’s WEB-INF/lib, and still nothing. Realized it was happening earlier on, at Jetty launch, rather than at webapp init, and remembered…
+Solution:
+You need to modify the run configuration for the Jetty server. Basically, in Eclipse, modify the classpath to add two external libraries, both under jetty_home/lib/annotations. Here’s a screenshot:
+
+------------------------
+
+
