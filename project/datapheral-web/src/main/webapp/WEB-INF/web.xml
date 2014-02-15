@@ -6,7 +6,7 @@
     id="WebApp_ID" version="2.5">
     <display-name>BaseServlet</display-name>
     <welcome-file-list>
-        <welcome-file>datapheral-web</welcome-file>
+        <welcome-file>baseservlet</welcome-file>
     </welcome-file-list>
  
     <servlet>
@@ -16,8 +16,19 @@
         </servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>ServletLifeCycle</servlet-name>
+        <servlet-class>
+            com.datapheral.web.ServletLifeCycle
+        </servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>    
     <servlet-mapping>
         <servlet-name>BaseServlet</servlet-name>
-        <url-pattern>/datapheral-web</url-pattern>
+        <url-pattern>/baseservlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLifeCycle</servlet-name>
+        <url-pattern>/servletlifecycle</url-pattern>
+    </servlet-mapping>    
 </web-app>
