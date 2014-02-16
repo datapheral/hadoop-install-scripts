@@ -1,0 +1,51 @@
+http://docs.oracle.com/javaee/7/tutorial/doc/websocket.htm
+
+https://www.openshift.com/blogs/how-to-build-java-websocket-applications-using-the-jsr-356-api
+
+http://www.tech-juice.org/2012/05/12/how-maven-builds-a-war-file/
+
+http://mvnrepository.com/artifact/org.eclipse.jetty/jetty-websocket/8.1.10.v20130312
+
+https://gist.github.com/manzke/1021982
+
+-------------------------
+
+jetty 9 adapter
+
+http://stackoverflow.com/questions/13881244/jetty-9-x-eclipse-plugin
+
+The run-jetty-run nightly builds support jetty 9.0.
+
+Eclipse > Help > Install New Software...
+
+Enter the URL -
+
+http://run-jetty-run.googlecode.com/svn/trunk/updatesite-nightly/
+
+-------------------------
+
+text value
+
+http://stackoverflow.com/questions/763745/how-to-get-text-box-value-in-javascript
+
+dom get element https://developer.mozilla.org/en-US/docs/Web/API/document.getElementById
+
+-----------
+
+shell command
+
+http://www.mkyong.com/java/how-to-execute-shell-command-from-java/
+
+cmd /c dir
+cmd /c calc
+cmd /c ipconfig
+cmd /c nslookup google.com
+
+http://www.java-tips.org/java-se-tips/java.util/from-runtime.exec-to-processbuilder.html
+http://www.mkyong.com/java/how-to-execute-shell-command-from-java/
+-----------------
+
+
+
+
+
