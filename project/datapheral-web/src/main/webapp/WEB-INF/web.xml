@@ -38,7 +38,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>WebSocket</servlet-name>
-		<url-pattern>/datapheralweb/*</url-pattern>
+		<url-pattern>/websockets/*</url-pattern>
 	</servlet-mapping>    
       
 </web-app>
