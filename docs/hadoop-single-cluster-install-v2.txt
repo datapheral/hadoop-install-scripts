@@ -1,0 +1,157 @@
+yum install java-1.7.0-openjdk
+yum install java-1.7.0-openjdk-devel
+cd downloads
+wget http://www.interior-dsgn.com/apache/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz
+mv hadoop-2.2.0 /usr/local/
+groupadd hadoop
+usermod -a -G hadoop root
+groups root
+ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+chmod 644 ~/.ssh/authorized_keys
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+hduser  ALL=(ALL)       ALL
+vi /etc/sysctl.conf
+# disable ipv6
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+yum install java-1.7.0-openjdk-devel
+ln -s /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.51 /usr/lib/jvm/jdk
+ln -s /usr/local/hadoop-2.2.0/ /usr/local/hadoop
+cd /root/
+vi .bashrc
+#Hadoop variables
+export JAVA_HOME=/usr/lib/jvm/jdk/
+export HADOOP_INSTALL=/usr/local/hadoop
+export PATH=$PATH:$HADOOP_INSTALL/bin
+export PATH=$PATH:$HADOOP_INSTALL/sbin
+export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
+export HADOOP_COMMON_HOME=$HADOOP_INSTALL
+export HADOOP_HDFS_HOME=$HADOOP_INSTALL
+export YARN_HOME=$HADOOP_INSTALL
+#end of paste
+apply to /etc/rc.local, need after boot
+source ~/.bashrc
+hadoop version
+chown -R root:hadoop /usr/local/hadoop-2.2.0/
+chown -R root:hadoop /usr/local/hadoop
+vi /etc/hosts
+0.0.0.0 master.local
+vi /usr/local/hadoop/etc/hadoop/core-site.xml
+<configuration>
+<property>
+<name>fs.default.name</name>
+<value>hdfs://master.local:9000</value>
+</property>
+</configuration>
+vi /usr/local/hadoop/etc/hadoop/yarn-site.xml
+ <property>
+ <name>yarn.nodemanager.aux-services</name>
+ <value>mapreduce_shuffle</value>
+</property>
+<property>
+ <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+ <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+</property>
+cp /usr/local/hadoop/etc/hadoop/mapred-site.xml.template /usr/local/hadoop/etc/hadoop/mapred-site.xml
+vi /usr/local/hadoop/etc/hadoop/mapred-site.xml
+<property>
+ <name>mapreduce.framework.name</name>
+ <value>yarn</value>
+</property>
+mkdir -p /root/hadoopdata/hdfs/namenode
+mkdir -p /root/hadoopdata/hdfs/datanode
+vi /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+<property>
+ <name>dfs.replication</name>
+ <value>1</value>
+</property>
+<property>
+ <name>dfs.namenode.name.dir</name>
+ <value>file:/root/hadoopdata/hdfs/namenode</value>
+</property>
+<property>
+ <name>dfs.datanode.data.dir</name>
+ <value>file:/root/hadoopdata/hdfs/datanode</value>
+</property>
+hdfs namenode -format
+start-dfs.sh
+start-yarn.sh
+
+[root@localhost downloads]# start-dfs.sh
+Starting namenodes on [master.local]
+master.local: starting namenode, logging to /usr/local/hadoop-2.2.0/logs/hadoop-root-namenode-localhost.localdomain.out
+localhost: starting datanode, logging to /usr/local/hadoop-2.2.0/logs/hadoop-root-datanode-localhost.localdomain.out
+Starting secondary namenodes [master.local]
+master.local: starting secondarynamenode, logging to /usr/local/hadoop-2.2.0/logs/hadoop-root-secondarynamenode-localhost.localdomain.out
+[root@localhost downloads]# jps
+3543 NameNode
+3627 DataNode
+3760 SecondaryNameNode
+1108 start.jar
+3875 Jps
+[root@localhost downloads]# start-yarn.sh
+starting yarn daemons
+starting resourcemanager, logging to /usr/local/hadoop-2.2.0/logs/yarn-root-resourcemanager-localhost.localdomain.out
+localhost: starting nodemanager, logging to /usr/local/hadoop-2.2.0/logs/yarn-root-nodemanager-localhost.localdomain.out
+[root@localhost downloads]# jps
+3543 NameNode
+4038 Jps
+3627 DataNode
+3760 SecondaryNameNode
+3922 ResourceManager
+1108 start.jar
+4008 NodeManager
+[root@localhost downloads]#
+
+[root@localhost downloads]# netstat -tuplen
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       User       Inode      PID/Program name
+tcp        0      0 0.0.0.0:50020               0.0.0.0:*                   LISTEN      0          29893      3627/java
+tcp        0      0 0.0.0.0:9000                0.0.0.0:*                   LISTEN      0          29385      3543/java
+tcp        0      0 0.0.0.0:50090               0.0.0.0:*                   LISTEN      0          30384      3760/java
+tcp        0      0 0.0.0.0:50070               0.0.0.0:*                   LISTEN      0          29113      3543/java
+tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      0          19195      1426/sshd
+tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN      0          10837      1062/master
+tcp        0      0 0.0.0.0:50010               0.0.0.0:*                   LISTEN      0          29750      3627/java
+tcp        0      0 0.0.0.0:50075               0.0.0.0:*                   LISTEN      0          29761      3627/java
+tcp        0      0 :::8031                     :::*                        LISTEN      0          31027      3922/java
+tcp        0      0 :::8032                     :::*                        LISTEN      0          31038      3922/java
+tcp        0      0 :::8033                     :::*                        LISTEN      0          31042      3922/java
+tcp        0      0 :::8080                     :::*                        LISTEN      0          11512      1108/java
+tcp        0      0 :::22                       :::*                        LISTEN      0          19197      1426/sshd
+tcp        0      0 :::8088                     :::*                        LISTEN      0          30831      3922/java
+tcp        0      0 ::1:25                      :::*                        LISTEN      0          10839      1062/master
+tcp        0      0 :::8030                     :::*                        LISTEN      0          31034      3922/java
+udp        0      0 0.0.0.0:68                  0.0.0.0:*                               0          10288      861/dhclient
+[root@localhost downloads]#
+
+Secondary namenode
+http://10.0.0.14:50090/status.jsp
+
+datanode
+http://10.0.0.14:50075/
+
+cluster
+http://10.0.0.14:8088/cluster
+
+node manager
+http://10.0.0.14:8042/node
+
+namenode
+http://10.0.0.14:50070/dfshealth.jsp
+
+stop-dfs.sh
+stop-yarn.sh
+
+/usr/local/hadoop/sbin/stop-dfs.sh
+
+
+
+
+
+
+
+

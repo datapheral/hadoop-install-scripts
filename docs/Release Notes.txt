@@ -1,0 +1,7 @@
+hadoop-2.2.0
+java-1.7.0-openjdk
+jetty-distribution-8.1.14.v20131031.zip
+wget.i686 0:1.12-1.11.el6_5
+unzip.i686 0:6.0-1.el6
+man.i686 0:1.6f-32.el6
+java-1.7.0-openjdk-devel.i686 1:1.7.0.51-2.4.4.1.el6_

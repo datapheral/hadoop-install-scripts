@@ -1,0 +1,889 @@
+Steps to install Hadoop 2.x release (Yarn or Next-Gen) on single node cluster setup in action
+Steps to install Hadoop 2.x release (Yarn or Next-Gen) on single node cluster setup in action
+
+http://thecodeway.blogspot.com/
+
+http://thecodeway.blogspot.com/2013/11/hadoop-220-installation-steps-for.html
+
+http://raseshmori.wordpress.com/2012/09/23/install-hadoop-2-0-1-yarn-nextgen/
+
+http://virtualboxes.org/images/centos/
+
+CentOS 6.5 minimal x86
+Size: 349 MBytes
+MD5SUM of ova image: 321edee90302ed4525db9e647ac29adc
+Link: https://s3-eu-west-1.amazonaws.com/virtualboxes.org/CentOS-6.5-i386-minimal.ova.torrent
+Active user account(s)(username/password): root/reverse.
+Notes: Installed from CentOS-6.5-i386-minimal.iso; Guest Additions NOT installed, Fix DHCP eth0 up
+
+yum install wget
+
+wget --no-check-certificate --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com" "http://download.oracle.com/otn-pub/java/jdk/6u43-b01/jdk-6u43-linux-x64.bin"
+
+jdk-6u45-linux-i586.bin
+
+[root@localhost files]# ll -rt
+total 70124
+drwxr-xr-x. 8 root root     4096 Mar 27  2013 jdk1.6.0_45
+-rwxrwxrwx. 1 root root 71799552 Feb 11 04:27 jdk-6u45-linux-i586.bin
+[root@localhost files]# mv jdk1.6.0_45/ /usr/local
+[root@localhost files]# ln -s /usr/local/jdk1.6.0_45/ /usr/local/jdk
+[root@localhost files]# ls -al /usr/local/jdk
+lrwxrwxrwx. 1 root root 23 Feb 11 04:29 /usr/local/jdk -> /usr/local/jdk1.6.0_45/
+[root@localhost files]#
+
+passphraseless ssh
+
+[root@localhost files]# ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+Generating public/private dsa key pair.
+Created directory '/root/.ssh'.
+Your identification has been saved in /root/.ssh/id_dsa.
+Your public key has been saved in /root/.ssh/id_dsa.pub.
+The key fingerprint is:
+fb:19:07:b1:cf:04:35:09:87:5a:6e:5e:de:33:f2:d7 root@localhost.localdomain
+The key's randomart image is:
++--[ DSA 1024]----+
+|          .o+.   |
+|          oo..   |
+|         +o      |
+|        . o+.    |
+|        Sooo..   |
+|         ..=o +  |
+|        . . +o o.|
+|         . +  . E|
+|          o    . |
++-----------------+
+[root@localhost files]#
+
+
+[root@localhost files]# cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+[root@localhost files]# cat ~/.ssh/authorized_keys
+ssh-dss AAAAB3NzaC1kc3MAAACBANI7cUJ2LaWv9kXoYuXZEkiuQNkuxCuvY5jHnW2TlIGzdMJNg11xVfZyGXtQc2dAvSlecAGwF5MpI0pUkdEAJyIV06t5RHlo4N+ERAQVNCkmRs/V/l0zZvsoox6u8PH5a8WwcW997yyMNl1yCZA5OwPGccjl7Q/OUNaAJeCxeTadAAAAFQDgGb5bQkgiIvZ5NmvE5266VZM/OwAAAIAIjrpXVuJKU/N76fP55jk8EyNzQrHoYPS9ByKvPi+Ht72UZrwRYqmuW6o1MKjj7dTq2R8yjItF/5wWxdVl9DNU0qkkMMt2is0EyiqlgPahiyx77PHMuVFl5M3GublKRhKVqZ7VPkQ0ynh8PG0MF0UpIqrOr1g9u4EVrKWbW2MnBgAAAIEAnYF//nFtWaBx/pTON17cSoZF4Hkz3m6IrhTGYMzKWj0z7oA2+B+SqBsNEMs1xsGMI5b9EZ5yPQ196FPYoa4RsYzT3zqFHm2OftAChwcSkNW8KLVzbK/NB5dqzVyqPZMVeFR0eLLtdtkW22C6ngw4A8UDZ43V+8yfXgiOxgf7E4M= root@localhost.localdomain
+[root@localhost files]# /etc/init.d/sshd restart
+Stopping sshd:                                             [  OK  ]
+Starting sshd:                                             [  OK  ]
+[root@localhost files]# ssh localhost
+The authenticity of host 'localhost (::1)' can't be established.
+RSA key fingerprint is 91:55:f4:e9:fb:45:b9:3b:fa:cc:a1:51:23:ba:4b:b6.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'localhost' (RSA) to the list of known hosts.
+Last login: Tue Feb 11 03:58:03 2014 from 10.0.0.9
+[root@localhost ~]# exit
+logout
+Connection to localhost closed.
+[root@localhost files]#
+
+
+install hadoop .23
+
+[root@localhost files]# wget http://www.interior-dsgn.com/apache/hadoop/common/hadoop-0.23.10/hadoop-0.23.10.tar.gz
+--2014-02-11 04:34:08--  http://www.interior-dsgn.com/apache/hadoop/common/hadoop-0.23.10/hadoop-0.23.10.tar.gz
+Resolving www.interior-dsgn.com... 205.186.175.205
+Connecting to www.interior-dsgn.com|205.186.175.205|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 98552377 (94M) [application/x-gzip]
+Saving to: “hadoop-0.23.10.tar.gz”
+
+100%[======================================>] 98,552,377  3.04M/s   in 40s
+
+2014-02-11 04:34:49 (2.35 MB/s) - “hadoop-0.23.10.tar.gz” saved [98552377/98552377]
+
+[root@localhost files]#
+
+
+[root@localhost files]# mv hadoop-0.23.10 /usr/local/
+[root@localhost files]# ln -s /usr/local/hadoop-0.23.10/ /usr/local/hadoop
+[root@localhost files]#
+
+
+https://hadoop.apache.org/docs/current1/single_node_setup.html#Required+Software
+
+--------------------------
+
+[root@localhost files]# wget http://www.interior-dsgn.com/apache/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz
+--2014-02-11 04:47:57--  http://www.interior-dsgn.com/apache/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz
+Resolving www.interior-dsgn.com... 205.186.175.205
+Connecting to www.interior-dsgn.com|205.186.175.205|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 109229073 (104M) [application/x-gzip]
+Saving to: “hadoop-2.2.0.tar.gz”
+
+100%[======================================>] 109,229,073 3.39M/s   in 32s
+
+2014-02-11 04:48:29 (3.26 MB/s) - “hadoop-2.2.0.tar.gz” saved [109229073/109229073]
+
+[root@localhost files]#
+
+
+https://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/SingleCluster.html
+
+http://thecodeway.blogspot.com/
+
+============================================
+
+su -c "yum install java-1.7.0-openjdk"
+
+http://openjdk.java.net/install/
+
+
+Complete!
+[root@localhost hadoop]# java -version
+java version "1.7.0_51"
+OpenJDK Runtime Environment (rhel-2.4.4.1.el6_5-i386 u51-b02)
+OpenJDK Client VM (build 24.45-b08, mixed mode, sharing)
+[root@localhost hadoop]#
+
+
+[root@localhost hadoop]# addgroup hadoop
+-bash: addgroup: command not found
+[root@localhost hadoop]# groupadd hadoop
+[root@localhost hadoop]# usermod -a -G hadoop hduser
+[root@localhost hadoop]# groups hduser
+hduser : hduser hadoop
+[root@localhost hadoop]#
+
+add passwordless hduser
+
+[hduser@localhost hadoop]$ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+Generating public/private dsa key pair.
+Created directory '/home/hduser/.ssh'.
+Your identification has been saved in /home/hduser/.ssh/id_dsa.
+Your public key has been saved in /home/hduser/.ssh/id_dsa.pub.
+The key fingerprint is:
+93:c5:93:b9:11:04:dd:20:2f:36:51:a2:af:f6:26:16 hduser@localhost.localdomain
+The key's randomart image is:
++--[ DSA 1024]----+
+|        ===o     |
+|       . *.+.    |
+|      . + O      |
+|       o = +     |
+|        S .      |
+|      E. .       |
+|      o.         |
+|     .o..        |
+|     . o.        |
++-----------------+
+[hduser@localhost hadoop]$ ^C
+[hduser@localhost hadoop]$ ^C
+[hduser@localhost hadoop]$ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+[hduser@localhost hadoop]$ cat ~/.ssh/authorized_keys
+ssh-dss AAAAB3NzaC1kc3MAAACBAIy+fvtHKWRLiVw885ZJB6sMxYo8RS55vaDVoHLLwcDCR306EEadcf0QePBH+DKok4Wc+BZt0LyRsLgrUgAsAGARauz+qrp3jNAeHS3mlehTtJEdIX1BYzzZr4340x+1o+UAluwp3Lk5qlHiIPZI4WxzAKViaWzX6xYZ6z3BbHZRAAAAFQDtlDcGyP4TELsxE3lWqRQp/MXFKQAAAIAMjc/lFHm7S85yyP0y4MwPVRNOO7OyhnDWoKY12Ffk2yWcTmlYHWlcqpPerC/WmLy56A5XMBSlb+bj6Y5imVBs55JS3WHT2GfPOV5CdlTYbzMMGB1+1Bp0W8bjlxgLKjLxfgWzr36FRXR+2FIZgI1zu3Voy0qytgunGVOGMbpsBAAAAIBb37WTcG2QalieXwloBaCuNJRCKxeTtEKMJJ6m17nactqmRFO608ooZfQfZKMn/wzAugm29yMf4fguOcKo96fZd1CSlNtrCl6kIQ2OMJIE2/UHAyE3lSZCJjb0IYyJtNyN4fgYdiTiF4mBfVWcyCDbiOzLUlFohKwWUob4JfjMGA== hduser@localhost.localdomain
+[hduser@localhost hadoop]$
+
+
+[root@localhost hadoop]# groups hduser^C
+[root@localhost hadoop]# ^C
+[root@localhost hadoop]# su hduser
+[hduser@localhost hadoop]$ vi ~/.ssh/authorized_keys
+[hduser@localhost hadoop]$ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+[hduser@localhost hadoop]$ chmod 644 ~/.ssh/authorized_keys ^C
+[hduser@localhost hadoop]$ ^C
+[hduser@localhost hadoop]$ ls -al ~/.ssh/authorized_keys
+-rw-rw-r--. 1 hduser hduser 1236 Feb 11 05:18 /home/hduser/.ssh/authorized_keys
+[hduser@localhost hadoop]$ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys^C
+[hduser@localhost hadoop]$ ^C
+[hduser@localhost hadoop]$ chmod 644 ~/.ssh/authorized_keys
+[hduser@localhost hadoop]$ ls -al ~/.ssh/authorized_keys
+-rw-r--r--. 1 hduser hduser 1236 Feb 11 05:18 /home/hduser/.ssh/authorized_keys
+[hduser@localhost hadoop]$ ssh localhost
+[hduser@localhost ~]$ exit
+logout
+Connection to localhost closed.
+[hduser@localhost hadoop]$
+
+http://www.philchen.com/2007/07/28/how-to-enable-passwordless-authentication-with-ssh
+
+http://thecodeway.blogspot.com/2013/11/hadoop-220-installation-steps-for.html
+
+ $ gksudo gedit /etc/sysctl.conf
+
+
+16. Add the following line to the end of the file:
+# disable ipv6
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+
+
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+hduser    ALL=(ALL)       ALL
+
+vi /etc/sudoers
+visudo
+
+[hduser@localhost ~]$ groups hduser
+hduser : hduser hadoop
+[hduser@localhost ~]$
+
+[hduser@localhost ~]$ sudo chown -R hduser:hadoop /usr/local/hadoop-2.2.0/
+[hduser@localhost ~]$ ls -al /usr/local/hadoop-2.2.0/
+total 60
+drwxr-xr-x.  9 hduser hadoop  4096 Oct  7 08:46 .
+drwxr-xr-x. 12 root   root    4096 Feb 11 05:03 ..
+drwxr-xr-x.  2 hduser hadoop  4096 Oct  7 08:38 bin
+drwxr-xr-x.  3 hduser hadoop  4096 Oct  7 08:38 etc
+drwxr-xr-x.  2 hduser hadoop  4096 Oct  7 08:38 include
+drwxr-xr-x.  3 hduser hadoop  4096 Oct  7 08:38 lib
+drwxr-xr-x.  2 hduser hadoop  4096 Oct  7 08:38 libexec
+-rw-r--r--.  1 hduser hadoop 15164 Oct  7 08:46 LICENSE.txt
+-rw-r--r--.  1 hduser hadoop   101 Oct  7 08:46 NOTICE.txt
+-rw-r--r--.  1 hduser hadoop  1366 Oct  7 08:46 README.txt
+drwxr-xr-x.  2 hduser hadoop  4096 Oct  7 08:38 sbin
+drwxr-xr-x.  4 hduser hadoop  4096 Oct  7 08:38 share
+[hduser@localhost ~]$
+
+
+[hduser@localhost ~]$ cd /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.51/jre
+[hduser@localhost jre]$ ll -rt
+total 8
+drwxr-xr-x.  2 root root 4096 Feb 11 05:05 bin
+drwxr-xr-x. 11 root root 4096 Feb 11 05:05 lib
+[hduser@localhost jre]$ cd ..l
+-bash: cd: ..l: No such file or directory
+[hduser@localhost jre]$ cd ..
+[hduser@localhost java-1.7.0-openjdk-1.7.0.51]$ ll -rt
+total 200
+-r--r--r--. 1 root root 172252 Jan 15 02:29 THIRD_PARTY_README
+-r--r--r--. 1 root root  19263 Jan 15 02:29 LICENSE
+-r--r--r--. 1 root root   1503 Jan 15 02:29 ASSEMBLY_EXCEPTION
+drwxr-xr-x. 4 root root   4096 Feb 11 05:05 jre
+[hduser@localhost java-1.7.0-openjdk-1.7.0.51]$ cd ..
+[hduser@localhost jvm]$ ll -rt
+total 4
+drwxr-xr-x. 3 root root 4096 Feb 11 05:05 java-1.7.0-openjdk-1.7.0.51
+lrwxrwxrwx. 1 root root   31 Feb 11 05:05 jre-1.7.0-openjdk -> java-1.7.0-openjdk-1.7.0.51/jre
+lrwxrwxrwx. 1 root root   21 Feb 11 05:05 jre -> /etc/alternatives/jre
+lrwxrwxrwx. 1 root root   29 Feb 11 05:05 jre-openjdk -> /etc/alternatives/jre_openjdk
+lrwxrwxrwx. 1 root root   27 Feb 11 05:05 jre-1.7.0 -> /etc/alternatives/jre_1.7.0
+[hduser@localhost jvm]$ which jdk
+/usr/bin/which: no jdk in (/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/hduser/bin)
+[hduser@localhost jvm]$ which java
+/usr/bin/java
+[hduser@localhost jvm]$ ls -al /usr/bin/java
+lrwxrwxrwx. 1 root root 22 Feb 11 05:05 /usr/bin/java -> /etc/alternatives/java
+[hduser@localhost jvm]$
+
+
+Is this ok [y/N]: y
+Downloading Packages:
+java-1.7.0-openjdk-devel-1.7.0.51-2.4.4.1.el6_5.i686.rpm | 9.4 MB     00:03
+Running rpm_check_debug
+Running Transaction Test
+Transaction Test Succeeded
+Running Transaction
+  Installing : 1:java-1.7.0-openjdk-devel-1.7.0.51-2.4.4.1.el6_5.i686       1/1
+  Verifying  : 1:java-1.7.0-openjdk-devel-1.7.0.51-2.4.4.1.el6_5.i686       1/1
+
+Installed:
+  java-1.7.0-openjdk-devel.i686 1:1.7.0.51-2.4.4.1.el6_5
+
+Complete!
+[hduser@localhost jre]$ sudo yum install java-1.7.0-openjdk-devel
+
+[hduser@localhost java-1.7.0-openjdk-1.7.0.51]$ cd ..
+[hduser@localhost jvm]$ ll -rt
+total 4
+lrwxrwxrwx. 1 root root   31 Feb 11 05:05 jre-1.7.0-openjdk -> java-1.7.0-openjdk-1.7.0.51/jre
+lrwxrwxrwx. 1 root root   21 Feb 11 05:05 jre -> /etc/alternatives/jre
+lrwxrwxrwx. 1 root root   29 Feb 11 05:05 jre-openjdk -> /etc/alternatives/jre_openjdk
+lrwxrwxrwx. 1 root root   27 Feb 11 05:05 jre-1.7.0 -> /etc/alternatives/jre_1.7.0
+lrwxrwxrwx. 1 root root   27 Feb 11 05:42 java-1.7.0-openjdk -> java-1.7.0-openjdk-1.7.0.51
+drwxr-xr-x. 7 root root 4096 Feb 11 05:42 java-1.7.0-openjdk-1.7.0.51
+lrwxrwxrwx. 1 root root   26 Feb 11 05:42 java -> /etc/alternatives/java_sdk
+lrwxrwxrwx. 1 root root   34 Feb 11 05:42 java-openjdk -> /etc/alternatives/java_sdk_openjdk
+lrwxrwxrwx. 1 root root   32 Feb 11 05:42 java-1.7.0 -> /etc/alternatives/java_sdk_1.7.0
+[hduser@localhost jvm]$
+
+
+[hduser@localhost jvm]$ sudo ln -s /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.51 /usr/lib/jvm/jdk
+[hduser@localhost jvm]$
+
+[hduser@localhost jvm]$ ls -al
+total 20
+drwxr-xr-x.  3 root root  4096 Feb 11 05:44 .
+dr-xr-xr-x. 43 root root 12288 Feb 11 05:05 ..
+lrwxrwxrwx.  1 root root    26 Feb 11 05:42 java -> /etc/alternatives/java_sdk
+lrwxrwxrwx.  1 root root    32 Feb 11 05:42 java-1.7.0 -> /etc/alternatives/java_sdk_1.7.0
+lrwxrwxrwx.  1 root root    27 Feb 11 05:42 java-1.7.0-openjdk -> java-1.7.0-openjdk-1.7.0.51
+drwxr-xr-x.  7 root root  4096 Feb 11 05:42 java-1.7.0-openjdk-1.7.0.51
+lrwxrwxrwx.  1 root root    34 Feb 11 05:42 java-openjdk -> /etc/alternatives/java_sdk_openjdk
+lrwxrwxrwx.  1 root root    40 Feb 11 05:44 jdk -> /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.51
+lrwxrwxrwx.  1 root root    21 Feb 11 05:05 jre -> /etc/alternatives/jre
+lrwxrwxrwx.  1 root root    27 Feb 11 05:05 jre-1.7.0 -> /etc/alternatives/jre_1.7.0
+lrwxrwxrwx.  1 root root    31 Feb 11 05:05 jre-1.7.0-openjdk -> java-1.7.0-openjdk-1.7.0.51/jre
+lrwxrwxrwx.  1 root root    29 Feb 11 05:05 jre-openjdk -> /etc/alternatives/jre_openjdk
+[hduser@localhost jvm]$
+
+
+http://openjdk.java.net/install/
+
+vi /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+
+# The java implementation to use.
+#export JAVA_HOME=${JAVA_HOME}
+export JAVA_HOME=/usr/lib/jvm/jdk/
+
+
+
+[hduser@localhost jvm]$ source ~/.bashrc
+[hduser@localhost jvm]$
+
+
+[hduser@localhost jvm]$ hadoop version
+Hadoop 2.2.0
+Subversion https://svn.apache.org/repos/asf/hadoop/common -r 1529768
+Compiled by hortonmu on 2013-10-07T06:28Z
+Compiled with protoc 2.5.0
+From source with checksum 79e53ce7994d1628b240f09af91e1af4
+This command was run using /usr/local/hadoop/share/hadoop/common/hadoop-common-2.2.0.jar
+[hduser@localhost jvm]$
+
+
+
+http://thecodeway.blogspot.com/2013/11/hadoop-220-installation-steps-for.html
+
+[hduser@localhost jvm]$ vi /usr/local/hadoop/etc/hadoop/core-site.xml
+[hduser@localhost jvm]$
+
+
+<configuration>
+<property>
+<name>fs.default.name</name>
+<value>hdfs://localhost:9000</value>
+</property>
+</configuration>
+
+
+vi  /usr/local/hadoop/etc/hadoop/yarn-site.xml
+
+
+<configuration>
+
+<!-- Site specific YARN configuration properties -->
+ <property>
+ <name>yarn.nodemanager.aux-services</name>
+ <value>mapreduce_shuffle</value>
+</property>
+
+
+<property>
+ <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+ <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+</property>
+
+</configuration>
+
+
+[hduser@localhost jvm]$ vi /usr/local/hadoop/etc/hadoop/mapred-site.xml.template
+[hduser@localhost jvm]$
+
+
+<configuration>
+<property>
+ <name>mapreduce.framework.name</name>
+ <value>yarn</value>
+</property>
+</configuration>
+
+
+[hduser@localhost jvm]$ cp /usr/local/hadoop/etc/hadoop/mapred-site.xml.template /usr/local/hadoop/etc/hadoop/mapred-site.xml
+[hduser@localhost jvm]$
+
+[hduser@localhost jvm]$ cd ~
+[hduser@localhost ~]$ ll -rt
+total 0
+[hduser@localhost ~]$ ^C
+[hduser@localhost ~]$ ^C
+[hduser@localhost ~]$ mkdir -p mydata/hdfs/namenode
+[hduser@localhost ~]$ mkdir -p mydata/hdfs/datanode
+[hduser@localhost ~]$
+
+
+http://thecodeway.blogspot.com/2013/11/hadoop-220-installation-steps-for.html
+
+
+[hduser@localhost ~]$ vi /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+[hduser@localhost ~]$
+
+
+<configuration>
+<property>
+ <name>dfs.replication</name>
+ <value>1</value>
+</property>
+
+
+<property>
+ <name>dfs.namenode.name.dir</name>
+ <value>file:/home/hduser/mydata/hdfs/namenode</value>
+</property>
+
+
+<property>
+ <name>dfs.datanode.data.dir</name>
+ <value>file:/home/hduser/mydata/hdfs/datanode</value>
+</property>
+</configuration>
+
+
+[hduser@localhost ~]$ hdfs namenode -format
+
+14/02/11 05:53:20 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid >= 0
+14/02/11 05:53:20 INFO util.ExitUtil: Exiting with status 0
+14/02/11 05:53:20 INFO namenode.NameNode: SHUTDOWN_MSG:
+/************************************************************
+SHUTDOWN_MSG: Shutting down NameNode at localhost.localdomain/127.0.0.1
+************************************************************/
+[hduser@localhost ~]$ hdfs namenode -format
+
+
+[hduser@localhost ~]$ ls -al mydata/hdfs/namenode/
+total 12
+drwxrwxr-x. 3 hduser hduser 4096 Feb 11 05:53 .
+drwxrwxr-x. 4 hduser hduser 4096 Feb 11 05:51 ..
+drwxrwxr-x. 2 hduser hduser 4096 Feb 11 05:53 current
+[hduser@localhost ~]$ ls -al mydata/hdfs/namenode/current/
+total 24
+drwxrwxr-x. 2 hduser hduser 4096 Feb 11 05:53 .
+drwxrwxr-x. 3 hduser hduser 4096 Feb 11 05:53 ..
+-rw-rw-r--. 1 hduser hduser  198 Feb 11 05:53 fsimage_0000000000000000000
+-rw-rw-r--. 1 hduser hduser   62 Feb 11 05:53 fsimage_0000000000000000000.md5
+-rw-rw-r--. 1 hduser hduser    2 Feb 11 05:53 seen_txid
+-rw-rw-r--. 1 hduser hduser  200 Feb 11 05:53 VERSION
+[hduser@localhost ~]$ cat mydata/hdfs/namenode/current/VERSION
+#Tue Feb 11 05:53:19 CET 2014
+namespaceID=826097091
+clusterID=CID-922c0385-4d72-47fd-b386-2015c652b255
+cTime=0
+storageType=NAME_NODE
+blockpoolID=BP-248446080-127.0.0.1-1392094399619
+layoutVersion=-47
+[hduser@localhost ~]$
+
+
+[hduser@localhost ~]$ start-dfs.sh
+Starting namenodes on [localhost]
+localhost: starting namenode, logging to /usr/local/hadoop/logs/hadoop-hduser-namenode-localhost.localdomain.out
+localhost: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hduser-datanode-localhost.localdomain.out
+Starting secondary namenodes [0.0.0.0]
+The authenticity of host '0.0.0.0 (0.0.0.0)' can't be established.
+RSA key fingerprint is 91:55:f4:e9:fb:45:b9:3b:fa:cc:a1:51:23:ba:4b:b6.
+Are you sure you want to continue connecting (yes/no)? yes
+0.0.0.0: Warning: Permanently added '0.0.0.0' (RSA) to the list of known hosts.
+0.0.0.0: starting secondarynamenode, logging to /usr/local/hadoop/logs/hadoop-hduser-secondarynamenode-localhost.localdomain.out
+[hduser@localhost ~]$
+
+
+[hduser@localhost ~]$ start-yarn.sh
+starting yarn daemons
+starting resourcemanager, logging to /usr/local/hadoop/logs/yarn-hduser-resourcemanager-localhost.localdomain.out
+localhost: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hduser-nodemanager-localhost.localdomain.out
+[hduser@localhost ~]$
+
+
+[hduser@localhost ~]$ jps
+1548 SecondaryNameNode
+1818 Jps
+1780 NodeManager
+1695 ResourceManager
+1416 DataNode
+1335 NameNode
+[hduser@localhost ~]$
+
+
+http://codesfusion.blogspot.com/2013/10/hadoop-hdfs-tutorial-1.html?m=1
+
+[hduser@localhost ~]$ hadoop fs -ls /
+[hduser@localhost ~]$ ^C
+[hduser@localhost ~]$ ^C
+[hduser@localhost ~]$ hadoop fs -mkdir -p /user/hduser
+[hduser@localhost ~]$ hadoop fs -ls /
+Found 1 items
+drwxr-xr-x   - hduser supergroup          0 2014-02-11 05:59 /user
+[hduser@localhost ~]$
+
+
+[hduser@localhost ~]$ vi someFile.txt
+[hduser@localhost ~]$ hadoop fs -copyFromLocal someFile.txt /user/hduser/someFile.txt
+[hduser@localhost ~]$ hadoop fs -ls /user/hduser/
+Found 1 items
+-rw-r--r--   1 hduser supergroup         24 2014-02-11 06:01 /user/hduser/someFile.txt
+[hduser@localhost ~]$
+
+http://blog.cloudera.com/blog/2009/08/hadoop-default-ports-quick-reference/
+
+https://hadoop.apache.org/docs/current2/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml
+
+
+/usr/local/hadoop/etc/hadoop/hdfs-site.xml
+
+
+[hduser@localhost hadoop]$ stop-dfs.sh
+Stopping namenodes on [localhost]
+localhost: stopping namenode
+localhost: stopping datanode
+Stopping secondary namenodes [0.0.0.0]
+0.0.0.0: stopping secondarynamenode
+[hduser@localhost hadoop]$ stop-yarn.sh
+stopping yarn daemons
+stopping resourcemanager
+localhost: stopping nodemanager
+no proxyserver to stop
+[hduser@localhost hadoop]$
+
+
+http://virtualboxes.org/images/centos/
+
+CentOS 6.5 minimal x86
+Size: 349 MBytes
+MD5SUM of ova image: 321edee90302ed4525db9e647ac29adc
+Link: https://s3-eu-west-1.amazonaws.com/virtualboxes.org/CentOS-6.5-i386-minimal.ova.torrent
+Active user account(s)(username/password): root/reverse.
+Notes: Installed from CentOS-6.5-i386-minimal.iso; Guest Additions NOT installed, Fix DHCP eth0 up
+
+https://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/SingleCluster.html
+
+
+http://codesfusion.blogspot.com/2013/10/setup-hadoop-2x-220-on-ubuntu.html?m=1
+
+
+from localhost to master
+
+[hduser@localhost hadoop]$ vi core-site.xml ^C
+[hduser@localhost hadoop]$ pwd
+/usr/local/hadoop/etc/hadoop
+[hduser@localhost hadoop]$
+
+
+<configuration>
+<property>
+<name>fs.default.name</name>
+<value>hdfs://master:9000</value>
+</property>
+</configuration>
+
+
+vi /etc/hosts
+
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+10.0.0.14   master master.localdomain master4 master4.localdomain4
+
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+~
+
+
+[hduser@localhost hadoop]$ vi /etc/hosts
+[hduser@localhost hadoop]$ ping master
+PING master (10.0.0.14) 56(84) bytes of data.
+64 bytes from master (10.0.0.14): icmp_seq=1 ttl=64 time=0.376 ms
+64 bytes from master (10.0.0.14): icmp_seq=2 ttl=64 time=0.414 ms
+^C
+--- master ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1317ms
+rtt min/avg/max/mdev = 0.376/0.395/0.414/0.019 ms
+[hduser@localhost hadoop]$
+
+
+[hduser@localhost hadoop]$ start-dfs.sh
+Starting namenodes on [master]
+The authenticity of host 'master (10.0.0.14)' can't be established.
+RSA key fingerprint is 91:55:f4:e9:fb:45:b9:3b:fa:cc:a1:51:23:ba:4b:b6.
+Are you sure you want to continue connecting (yes/no)? yes
+master: Warning: Permanently added 'master,10.0.0.14' (RSA) to the list of known hosts.
+master: starting namenode, logging to /usr/local/hadoop/logs/hadoop-hduser-namenode-localhost.localdomain.out
+localhost: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hduser-datanode-localhost.localdomain.out
+Starting secondary namenodes [0.0.0.0]
+0.0.0.0: starting secondarynamenode, logging to /usr/local/hadoop/logs/hadoop-hduser-secondarynamenode-localhost.localdomain.out
+[hduser@localhost hadoop]$ start-yarn.sh
+starting yarn daemons
+starting resourcemanager, logging to /usr/local/hadoop/logs/yarn-hduser-resourcemanager-localhost.localdomain.out
+localhost: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hduser-nodemanager-localhost.localdomain.out
+[hduser@localhost hadoop]$
+
+https://stackoverflow.com/questions/8872807/hadoop-datanodes-cannot-find-namenode
+
+
+[hduser@localhost hadoop]$ netstat -tuplen
+
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       User       Inode      PID/Program name 
+tcp        0      0 0.0.0.0:50020               0.0.0.0:*                   LISTEN      500        19723      2820/java        
+tcp        0      0 10.0.0.14:9000              0.0.0.0:*                   LISTEN      500        19181      2732/java        
+tcp        0      0 0.0.0.0:50090               0.0.0.0:*                   LISTEN      500        20365      2955/java        
+tcp        0      0 0.0.0.0:50070               0.0.0.0:*                   LISTEN      500        18852      2732/java        
+tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      0          10589      -                
+tcp        0      0 0.0.0.0:8088                0.0.0.0:*                   LISTEN      500        20947      3112/java        
+tcp        0      0 0.0.0.0:50010               0.0.0.0:*                   LISTEN      500        19555      2820/java        
+tcp        0      0 0.0.0.0:50075               0.0.0.0:*                   LISTEN      500        19664      2820/java        
+tcp        0      0 :::22                       :::*                        LISTEN      0          10591      -                
+udp        0      0 0.0.0.0:68                  0.0.0.0:*                               0          10280      -                
+[hduser@localhost hadoop]$
+
+
+[hduser@localhost hadoop]$ sudo iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere            state RELATED,ESTABLISHED
+ACCEPT     icmp --  anywhere             anywhere
+ACCEPT     all  --  anywhere             anywhere
+ACCEPT     tcp  --  anywhere             anywhere            state NEW tcp dpt:ssh
+REJECT     all  --  anywhere             anywhere            reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+REJECT     all  --  anywhere             anywhere            reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+[hduser@localhost hadoop]$
+
+
+
+[hduser@localhost hadoop]$ sudo iptables -F
+[hduser@localhost hadoop]$ sudo iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+[hduser@localhost hadoop]$
+
+
+http://10.0.0.14:9000/
+It looks like you are making an HTTP request to a Hadoop IPC port. This is not the correct port for the web interface on this daemon.
+
+https://hadoop.apache.org/docs/current2/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml
+
+dfs.namenode.http-address    0.0.0.0:50070    The address and the base port where the dfs namenode web ui will listen on. 
+
+http://10.0.0.14:50070/dfshealth.jsp
+
+NameNode 'master:9000' (active)
+Started:    Tue Feb 11 06:17:12 CET 2014
+Version:    2.2.0, 1529768
+Compiled:    2013-10-07T06:28Z by hortonmu from branch-2.2.0
+Cluster ID:    CID-922c0385-4d72-47fd-b386-2015c652b255
+Block Pool ID:    BP-248446080-127.0.0.1-1392094399619
+
+Browse the filesystem
+NameNode Logs
+
+Cluster Summary
+Security is OFF
+4 files and directories, 1 blocks = 5 total.
+Heap Memory used 41.73 MB is 91% of Commited Heap Memory 45.85 MB. Max Heap Memory is 966.69 MB.
+Non Heap Memory used 27.19 MB is 74% of Commited Non Heap Memory 36.34 MB. Max Non Heap Memory is 118 MB.
+Configured Capacity    :    16.25 GB
+DFS Used    :    36 KB
+Non DFS Used    :    2.20 GB
+DFS Remaining    :    14.05 GB
+DFS Used%    :    0.00%
+DFS Remaining%    :    86.44%
+Block Pool Used    :    36 KB
+Block Pool Used%    :    0.00%
+DataNodes usages    :    Min %    Median %    Max %    stdev %
+        0.00%    0.00%    0.00%    0.00%
+Live Nodes     :    1 (Decommissioned: 0)
+Dead Nodes     :    0 (Decommissioned: 0)
+Decommissioning Nodes     :    0
+Number of Under-Replicated Blocks    :    0
+
+
+
+datanode
+
+http://10.0.0.14:50075/
+Directory: /
+WEB-INF/     4096 bytes     Oct 7, 2013 8:38:39 AM
+robots.txt     26 bytes     Oct 7, 2013 8:38:39 AM
+
+
+
+http://10.0.0.14:8088/cluster
+
+
+
+
+http://codesfusion.blogspot.com/2013/11/hadoop-2x-core-hdfs-and-yarn-components.html
+
+
+Hadoop Core (HDFS and YARN) Components Explained
+It's critical to understand the core components in Hadoop YARN (Yet Another Resource Negotiator) or MapReduce 2.0, and how the components interact with each other in the system. Following tutorial will explain those components and there are reference links at the bottom you can follow to read up more details. 
+
+
+http://codesfusion.blogspot.com/2013/10/hadoop-wordcount-with-new-map-reduce-api.html
+
+another good tutorial
+
+http://raseshmori.wordpress.com/2012/09/23/install-hadoop-2-0-1-yarn-nextgen/
+
+sample wordcount
+
+
+[hduser@localhost ~]$ hadoop fs -copyFromLocal in /user/hduser/in
+[hduser@localhost ~]$ cat in/file
+This one heck of a line
+This is second heck of a line
+This is another one
+[hduser@localhost ~]$
+
+
+[hduser@localhost ~]$ hadoop fs -ls /user/hduser/in
+Found 1 items
+-rw-r--r--   1 hduser supergroup         74 2014-02-11 07:12 /user/hduser/in/file
+[hduser@localhost ~]$ hadoop fs -cat /user/hduser/in/file
+This one heck of a line
+This is second heck of a line
+This is another one
+[hduser@localhost ~]$
+
+
+http://10.0.0.14:8088/proxy/application_1392095898520_0001/
+
+[hduser@localhost ~]$ cd /usr/local/hadoop/
+[hduser@localhost hadoop]$ pwd
+/usr/local/hadoop
+[hduser@localhost hadoop]$ hadoop jar share/
+doc/    hadoop/
+
+
+[hduser@localhost hadoop]$ hadoop jar share/hadoop/mapreduce/
+hadoop-mapreduce-client-app-2.2.0.jar              hadoop-mapreduce-client-jobclient-2.2.0-tests.jar
+hadoop-mapreduce-client-common-2.2.0.jar           hadoop-mapreduce-client-shuffle-2.2.0.jar
+hadoop-mapreduce-client-core-2.2.0.jar             hadoop-mapreduce-examples-2.2.0.jar
+hadoop-mapreduce-client-hs-2.2.0.jar               lib/
+hadoop-mapreduce-client-hs-plugins-2.2.0.jar       lib-examples/
+hadoop-mapreduce-client-jobclient-2.2.0.jar        sources/
+[hduser@localhost hadoop]$ hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /user/hduser/in /user/hduser/out
+14/02/11 07:15:35 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+14/02/11 07:15:38 INFO input.FileInputFormat: Total input paths to process : 1
+14/02/11 07:15:39 INFO mapreduce.JobSubmitter: number of splits:1
+14/02/11 07:15:39 INFO Configuration.deprecation: user.name is deprecated. Instead, use mapreduce.job.user.name
+14/02/11 07:15:39 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+14/02/11 07:15:39 INFO Configuration.deprecation: mapred.output.value.class is deprecated. Instead, use mapreduce.job.output.value.class
+
+
+14/02/11 07:15:39 INFO Configuration.deprecation: mapred.working.dir is deprecated. Instead, use mapreduce.job.working.dir
+14/02/11 07:15:40 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1392095898520_0001
+14/02/11 07:15:43 INFO impl.YarnClientImpl: Submitted application application_1392095898520_0001 to ResourceManager at /0.0.0.0:8032
+14/02/11 07:15:43 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1392095898520_0001/
+14/02/11 07:15:43 INFO mapreduce.Job: Running job: job_1392095898520_0001
+14/02/11 07:16:35 INFO mapreduce.Job: Job job_1392095898520_0001 running in uber mode : false
+14/02/11 07:16:35 INFO mapreduce.Job:  map 0% reduce 0%
+14/02/11 07:18:33 INFO mapreduce.Job:  map 100% reduce 0%
+
+
+14/02/11 07:15:43 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1392095898520_0001/
+14/02/11 07:15:43 INFO mapreduce.Job: Running job: job_1392095898520_0001
+14/02/11 07:16:35 INFO mapreduce.Job: Job job_1392095898520_0001 running in uber mode : false
+14/02/11 07:16:35 INFO mapreduce.Job:  map 0% reduce 0%
+14/02/11 07:18:33 INFO mapreduce.Job:  map 100% reduce 0%
+14/02/11 07:19:17 INFO mapreduce.Job:  map 100% reduce 67%
+14/02/11 07:19:21 INFO mapreduce.Job:  map 100% reduce 100%
+14/02/11 07:19:30 INFO mapreduce.Job: Job job_1392095898520_0001 completed successfully
+14/02/11 07:19:33 INFO mapreduce.Job: Counters: 43
+        File System Counters
+                FILE: Number of bytes read=102
+
+
+14/02/11 07:19:30 INFO mapreduce.Job: Job job_1392095898520_0001 completed successfully
+14/02/11 07:19:33 INFO mapreduce.Job: Counters: 43
+        File System Counters
+                FILE: Number of bytes read=102
+                FILE: Number of bytes written=158553
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=177
+                HDFS: Number of bytes written=60
+                HDFS: Number of read operations=6
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+        Job Counters
+                Launched map tasks=1
+                Launched reduce tasks=1
+                Data-local map tasks=1
+                Total time spent by all maps in occupied slots (ms)=117342
+                Total time spent by all reduces in occupied slots (ms)=39684
+        Map-Reduce Framework
+                Map input records=3
+                Map output records=17
+                Map output bytes=142
+                Map output materialized bytes=102
+                Input split bytes=103
+                Combine input records=17
+                Combine output records=9
+                Reduce input groups=9
+                Reduce shuffle bytes=102
+                Reduce input records=9
+                Reduce output records=9
+                Spilled Records=18
+                Shuffled Maps =1
+                Failed Shuffles=0
+                Merged Map outputs=1
+                GC time elapsed (ms)=2081
+                CPU time spent (ms)=12010
+                Physical memory (bytes) snapshot=202866688
+                Virtual memory (bytes) snapshot=789721088
+                Total committed heap usage (bytes)=123854848
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=74
+        File Output Format Counters
+                Bytes Written=60
+[hduser@localhost hadoop]$
+
+
+
+[hduser@localhost hadoop]$ hadoop fs -ls /user/hduser/out
+Found 2 items
+-rw-r--r--   1 hduser supergroup          0 2014-02-11 07:19 /user/hduser/out/_SUCCESS
+-rw-r--r--   1 hduser supergroup         60 2014-02-11 07:19 /user/hduser/out/part-r-00000
+[hduser@localhost hadoop]$
+
+
+http://10.0.0.14:8088/cluster/app/application_1392095898520_0001
+
+User:     hduser
+Name:     word count
+Application Type:     MAPREDUCE
+State:     FINISHED
+FinalStatus:     SUCCEEDED
+Started:     11-Feb-2014 07:15:42
+Elapsed:     3mins, 47sec
+Tracking URL:     History
+Diagnostics: 
+
+
+
+[hduser@localhost hadoop]$ hadoop fs -ls /user/hduser/out
+Found 2 items
+-rw-r--r--   1 hduser supergroup          0 2014-02-11 07:19 /user/hduser/out/_SUCCESS
+-rw-r--r--   1 hduser supergroup         60 2014-02-11 07:19 /user/hduser/out/part-r-00000
+[hduser@localhost hadoop]$ hadoop fs -cat /user/hduser/out/part-r-00000
+This    3
+a       2
+another 1
+heck    2
+is      2
+line    2
+of      2
+one     2
+second  1
+[hduser@localhost hadoop]$
+
+file browse
+
+http://10.0.0.14:50075/browseDirectory.jsp?namenodeInfoPort=50070&dir=/&nnaddr=10.0.0.14:9000
+
+http://10.0.0.14:50075/browseBlock.jsp?blockId=1073741833&blockSize=60&genstamp=1009&filename=%2Fuser%2Fhduser%2Fout%2Fpart-r-00000&datanodePort=50010&namenodeInfoPort=50070&nnaddr=10.0.0.14:9000

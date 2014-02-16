@@ -1,0 +1,9 @@
+yum install java-1.7.0-openjdk
+[root@localhost ~]# java -version
+java version "1.7.0_51"
+OpenJDK Runtime Environment (rhel-2.4.4.1.el6_5-i386 u51-b02)
+OpenJDK Client VM (build 24.45-b08, mixed mode, sharing)
+[root@localhost ~]#
+
+http://www.datameer.com/documentation/display/DAS14/Starting+Hadoop+Cluster+at+boot+time
+

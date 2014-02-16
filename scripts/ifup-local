@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$1" = lo ]; then
+    exit 0
+fi
+
+cp /etc/issue-standard /etc/issue
+/usr/local/bin/get-ip-address >> /etc/issue
+echo "" >> /etc/issue
