@@ -21,7 +21,7 @@
 				<version>2.0.1</version>
 			</plugin>
 		</plugins>
-		<finalName>datapheralweb</finalName>
+		<finalName>datapheral-web</finalName>
 	</build>
 	<dependencies>
 		<dependency>
