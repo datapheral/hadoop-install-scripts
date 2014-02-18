@@ -1,0 +1,57 @@
+yum install git
+cd /root/downloads
+
+git clone https://github.com/cloudera/hue.git
+
+
+[root@localhost hue]# yum install ant asciidoc cyrus-sasl-devel cyrus-sasl-gssapi gcc gcc-c++ krb5-devel libtidy libxml2-devel libxslt-devel maven2 mysql mysql-devel openldap-devel python-devel python-simplejson sqlite-devel
+
+
+wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+
+yum install apache-maven
+
+http://www.gluster.org/2013/08/yum-install-maven-yes-you-can/
+
+wget http://apache.cs.utah.edu/maven/maven-2/2.2.1/binaries/apache-maven-2.2.1-bin.zip
+export M2_HOME=/usr/local/apache-maven-2.2.1
+export PATH=${M2_HOME}/bin:${PATH}
+source ~/.bashrc
+https://github.com/cloudera/hue/blob/master/README.rst
+cd hue
+make apps
+
+issue maven dependency
+https://groups.google.com/forum/#!msg/neo4j/-fcABNV9LuY/eO4xdKhkv0YJ
+
+wget http://supergsego.com/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.zip
+add to .bashrc
+rm -rf  ~/.m2/repository/*
+Yes, maven v3 solve problem. Thank you very much!
+
+cd hue
+make apps
+
+http://cloudera.github.io/hue/docs-2.0.1/manual.html#_web_server_configuration
+secret_key=jFE93j;2[290-eiw.KEiwN2s3['d;/.q[eIW^y#e=+Iei*@Mn<qW5o
+
+http://grokbase.com/t/cloudera/hue-user/13c9hgeq8y/why-http-host-still-bind-on-127-0-0-1
+build/env/bin/hue runserver 10.0.0.14:8000
+admin/admin
+
+http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/WebHDFS.html
+
+hdfs-ste.xml
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>true</value>
+    </property>
+    
+http://stackoverflow.com/questions/10672700/http-request-to-webhdfs-but-empty-reply-from-server
+
+http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH4/4.2.0/CDH4-High-Availability-Guide/cdh4hag_topic_2_3.html
+
+quick start
+http://10.0.0.14:8000/about/#step5
+    
+

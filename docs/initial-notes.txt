@@ -72,5 +72,16 @@ Contexts known to this server are:
 
 -----------------------
 
+start/stop script
+
+rc.local.start
+rc.local.shutdown
+
+http://crunchbang.org/forums/viewtopic.php?id=14453
+
+-----------------------------
+
+
+
 
 

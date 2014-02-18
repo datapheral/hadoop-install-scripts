@@ -148,8 +148,21 @@ stop-yarn.sh
 
 /usr/local/hadoop/sbin/stop-dfs.sh
 
-
-
+hadoop fs -ls /
+hadoop fs -mkdir /user
+hadoop fs -mkdir /user/hduser
+hadoop fs -ls /user/hduser
+mkdir in
+cat > in/file
+This one heck of a line
+This is second heck of a line
+This is another one
+^C
+hadoop fs -copyFromLocal in /user/hduser/in
+hadoop fs -ls /user/hduser/in
+hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /user/hduser/in /user/hduser/out
+hadoop fs -ls /user/hduser/in
+hadoop fs -cat /user/hduser/out/part-r-00000
 
 
 

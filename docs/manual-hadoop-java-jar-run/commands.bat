@@ -1,0 +1,1 @@
+"C:\Documents and Settings\Administrator>"c:\Program Files\Java\jdk1.7.0_51\bin\javaw.exe" -jar a.har
