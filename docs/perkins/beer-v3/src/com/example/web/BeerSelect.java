@@ -8,22 +8,23 @@ import java.util.*;
 public class BeerSelect extends HttpServlet {
 
 	static {
-		System.out.println("servlet loaded...");
+		System.out.println("servlet loaded..."+Thread.currentThread().getName());
 	}
 	
 	public BeerSelect() {
-		System.out.println("constructor loaded...");
+		System.out.println("constructor loaded..."+Thread.currentThread().getName());
 	}
 	
 	public void init() throws ServletException {
-		System.out.println("init loaded...");
+		System.out.println("init loaded..."+Thread.currentThread().getName());
 		super.init();
 	}
 	
 	public void service(HttpServletRequest request,
 					HttpServletResponse response) 
 					throws IOException, ServletException {
-		System.out.println("service loaded...");
+		System.out.println("service loaded..."+Thread.currentThread().getName());
+		
 		super.service(request, response);
 	}
 	
@@ -31,7 +32,7 @@ public class BeerSelect extends HttpServlet {
 					HttpServletResponse response) 
 					throws IOException, ServletException {
 		
-		System.out.println("doget loaded...");
+		System.out.println("doget loaded..."+Thread.currentThread().getName());
 		
 		response.setContentType("text/html");
 		
