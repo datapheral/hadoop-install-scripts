@@ -1,0 +1,8 @@
+http://stackoverflow.com/questions/10573957/pushing-from-local-repository-to-github-hosted-remote
+
+http://git-scm.com/downloads/guis
+
+git pull <remote> <branch>
+
+git push origin master
+git pull origin master
