@@ -6,3 +6,5 @@ git pull <remote> <branch>
 
 git push origin master
 git pull origin master
+
+http://git-scm.com/
