@@ -1,0 +1,150 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">&lt;%-</span><span style="color: #333333">-</span>
+ Licensed to the Apache Software <span style="color: #0066BB; font-weight: bold">Foundation</span> <span style="color: #333333">(</span>ASF<span style="color: #333333">)</span> under one or more
+  contributor license agreements<span style="color: #333333">.</span>  See the NOTICE file distributed with
+  <span style="color: #008800; font-weight: bold">this</span> work <span style="color: #008800; font-weight: bold">for</span> additional information regarding copyright ownership<span style="color: #333333">.</span>
+  The ASF licenses <span style="color: #008800; font-weight: bold">this</span> file to You under the Apache License<span style="color: #333333">,</span> Version <span style="color: #6600EE; font-weight: bold">2.0</span>
+  <span style="color: #333333">(</span>the <span style="background-color: #fff0f0">&quot;License&quot;</span><span style="color: #333333">);</span> you may not use <span style="color: #008800; font-weight: bold">this</span> file except in compliance with
+  the License<span style="color: #333333">.</span>  You may obtain a copy of the License at
+
+      <span style="color: #997700; font-weight: bold">http:</span><span style="color: #888888">//www.apache.org/licenses/LICENSE-2.0</span>
+
+  Unless required by applicable law or agreed to in writing<span style="color: #333333">,</span> software
+  distributed under the License is distributed on an <span style="background-color: #fff0f0">&quot;AS IS&quot;</span> BASIS<span style="color: #333333">,</span>
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND<span style="color: #333333">,</span> either express or implied<span style="color: #333333">.</span>
+  See the License <span style="color: #008800; font-weight: bold">for</span> the specific language governing permissions and
+  limitations under the License<span style="color: #333333">.</span>
+<span style="color: #333333">--</span><span style="color: #008800; font-weight: bold">%&gt;</span>
+<span style="color: #007700">&lt;html&gt;</span>
+  <span style="color: #007700">&lt;head&gt;</span>
+    <span style="color: #007700">&lt;title&gt;</span>Tag Plugin Examples: if<span style="color: #007700">&lt;/title&gt;</span>
+  <span style="color: #007700">&lt;/head&gt;</span>
+  <span style="color: #007700">&lt;body&gt;</span>
+    <span style="color: #007700">&lt;h1&gt;</span>Tag Plugin Examples - <span style="color: #880000; font-weight: bold">&amp;lt;</span>c:if&gt;<span style="color: #007700">&lt;/h1&gt;</span>
+
+    <span style="color: #007700">&lt;hr/&gt;</span>
+    <span style="color: #007700">&lt;br/&gt;</span>
+    <span style="color: #007700">&lt;a</span> <span style="color: #0000CC">href=</span><span style="background-color: #fff0f0">&quot;notes.html&quot;</span><span style="color: #007700">&gt;</span>Plugin Introductory Notes<span style="color: #007700">&lt;/a&gt;</span>
+    <span style="color: #007700">&lt;br/&gt;</span>
+    <span style="color: #007700">&lt;a</span> <span style="color: #0000CC">href=</span><span style="background-color: #fff0f0">&quot;howto.html&quot;</span><span style="color: #007700">&gt;</span>Brief Instructions for Writing Plugins<span style="color: #007700">&lt;/a&gt;</span>
+    <span style="color: #007700">&lt;br/&gt;</span> <span style="color: #007700">&lt;br/&gt;</span>
+    <span style="color: #007700">&lt;hr/&gt;</span>
+
+    <span style="color: #007700">&lt;br/&gt;</span>
+    <span style="color: #008800; font-weight: bold">&lt;%@</span> taglib uri<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;c&quot;</span> <span style="color: #008800; font-weight: bold">%&gt;</span>
+
+    <span style="color: #007700">&lt;h3&gt;</span>Set the test result to a variable<span style="color: #007700">&lt;/h3&gt;</span>
+    <span style="color: #007700">&lt;c:if</span> <span style="color: #0000CC">test=</span><span style="background-color: #fff0f0">&quot;${1==1}&quot;</span> <span style="color: #0000CC">var=</span><span style="background-color: #fff0f0">&quot;theTruth&quot;</span> <span style="color: #0000CC">scope=</span><span style="background-color: #fff0f0">&quot;page&quot;</span><span style="color: #007700">/&gt;</span>
+    The result of testing for (1==1) is: ${theTruth}
+
+    <span style="color: #007700">&lt;h3&gt;</span>Conditionally execute the body<span style="color: #007700">&lt;/h3&gt;</span>
+    <span style="color: #007700">&lt;c:if</span> <span style="color: #0000CC">test=</span><span style="background-color: #fff0f0">&quot;${2&gt;0}&quot;</span><span style="color: #007700">&gt;</span>
+        <span style="color: #007700">&lt;p&gt;</span>It&#39;s true that (2&gt;0)! Working.<span style="color: #007700">&lt;/p&gt;</span>
+    <span style="color: #007700">&lt;/c:if&gt;</span>
+    <span style="color: #007700">&lt;c:if</span> <span style="color: #0000CC">test=</span><span style="background-color: #fff0f0">&quot;${0&gt;2}&quot;</span><span style="color: #007700">&gt;</span>
+        <span style="color: #007700">&lt;p&gt;</span>It&#39;s not true that (0&gt;2)! Failed.<span style="color: #007700">&lt;/p&gt;</span>
+    <span style="color: #007700">&lt;/c:if&gt;</span>
+	
+    <span style="color: #007700">&lt;h3&gt;</span>Conditionally check the string<span style="color: #007700">&lt;/h3&gt;</span>
+	<span style="color: #007700">&lt;c:set</span> <span style="color: #0000CC">var=</span><span style="background-color: #fff0f0">&quot;userType&quot;</span> <span style="color: #0000CC">value=</span><span style="background-color: #fff0f0">&quot;member&quot;</span> <span style="color: #0000CC">scope=</span><span style="background-color: #fff0f0">&quot;page&quot;</span><span style="color: #007700">/&gt;</span>
+	<span style="color: #007700">&lt;c:if</span> <span style="color: #0000CC">test=</span><span style="background-color: #fff0f0">&quot;${userType eq &#39;member&#39;}&quot;</span><span style="color: #007700">&gt;</span>
+		<span style="color: #008800; font-weight: bold">&lt;jsp:include page=&quot;sampleComments.jsp&quot;/&gt;</span>	
+	<span style="color: #007700">&lt;/c:if&gt;</span>
+	
+    <span style="color: #007700">&lt;h3&gt;</span>Conditionally check from radio and textfield<span style="color: #007700">&lt;/h3&gt;</span>	
+	<span style="color: #008800; font-weight: bold">&lt;jsp:include page=&quot;sampleRadioComments.jsp&quot;/&gt;</span>
+	<span style="color: #007700">&lt;br/&gt;</span>
+	Selected userType: <span style="color: #007700">&lt;c:out</span> <span style="color: #0000CC">value=</span><span style="background-color: #fff0f0">&quot;${param.userPref}&quot;</span><span style="color: #007700">/&gt;</span>
+	<span style="color: #007700">&lt;br/&gt;</span>
+	Selected name: <span style="color: #007700">&lt;c:out</span> <span style="color: #0000CC">value=</span><span style="background-color: #fff0f0">&quot;${param.name}&quot;</span><span style="color: #007700">/&gt;</span>
+	<span style="color: #007700">&lt;br/&gt;</span>
+	<span style="color: #007700">&lt;c:if</span> <span style="color: #0000CC">test=</span><span style="background-color: #fff0f0">&quot;${param.userPref eq &#39;One&#39;}&quot;</span><span style="color: #007700">&gt;</span>
+		<span style="color: #007700">&lt;c:out</span> <span style="color: #0000CC">value=</span><span style="background-color: #fff0f0">&quot;You selected 1&quot;</span><span style="color: #007700">/&gt;</span>
+	<span style="color: #007700">&lt;/c:if&gt;</span>
+	<span style="color: #007700">&lt;c:if</span> <span style="color: #0000CC">test=</span><span style="background-color: #fff0f0">&quot;${param.userPref eq &#39;Tow&#39;}&quot;</span><span style="color: #007700">&gt;</span>
+		<span style="color: #007700">&lt;c:out</span> <span style="color: #0000CC">value=</span><span style="background-color: #fff0f0">&quot;You selected 2&quot;</span><span style="color: #007700">/&gt;</span>
+	<span style="color: #007700">&lt;/c:if&gt;</span>	
+	<span style="color: #007700">&lt;c:if</span> <span style="color: #0000CC">test=</span><span style="background-color: #fff0f0">&quot;${param.userPref eq &#39;Three&#39;}&quot;</span><span style="color: #007700">&gt;</span>
+		<span style="color: #007700">&lt;c:out</span> <span style="color: #0000CC">value=</span><span style="background-color: #fff0f0">&quot;You selected 3&quot;</span><span style="color: #007700">/&gt;</span>
+	<span style="color: #007700">&lt;/c:if&gt;</span>	
+	<span style="color: #007700">&lt;br/&gt;</span>
+	<span style="color: #007700">&lt;br/&gt;</span>
+
+	
+	
+  <span style="color: #007700">&lt;/body&gt;</span>
+<span style="color: #007700">&lt;/html&gt;</span>
+</pre></td></tr></table></div>

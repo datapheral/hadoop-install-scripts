@@ -1,0 +1,4 @@
+1. will put menu for the following:
+scriptlet
+scriptless
+declaration
